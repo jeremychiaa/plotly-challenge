@@ -27,7 +27,7 @@ d3.json("samples.json").then((sampleData) => {
         // Retieve first 10 OTUs and arrange them in reverse order
         var sampleValues = sortedPatientData[i].sample_values.slice(0, 10).reverse();
         var otuIds = sortedPatientData[i].otu_ids.slice(0, 10).reverse();
-        var otuLabels = sortedPatientData[i].otu_labels.slice(0, 10).reverse();
+        var topOtuLabels = sortedPatientData[i].otu_labels.slice(0, 10).reverse();
 
         // Create empty array for chart labels
         var chartLabels = [];
@@ -41,7 +41,7 @@ d3.json("samples.json").then((sampleData) => {
             x: sampleValues,
             y: chartLabels.reverse(),
             orientation: "h",
-            text: otuLabels
+            text: topOtuLabels
         }]
 
         // Setting the plot title
@@ -55,13 +55,14 @@ d3.json("samples.json").then((sampleData) => {
         // Store values for bubble chart into variables
         var sampleValues = sampleData.samples[i].sample_values; // y values & marker size
         var otuIds = sampleData.samples[i].otu_ids; // x values
-        var otuLables = sampleData.samples[i].otu_labels;
+        var otuLabels = sampleData.samples[i].otu_labels;
 
         // Set data to plot
         var data = [{
             x: otuIds,
             y: sampleValues,
             mode: "markers",
+            text: otuLabels,
             marker: {
                 size: sampleValues.map(x => x / 1.25),
                 color: otuIds
