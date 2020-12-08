@@ -101,6 +101,19 @@ d3.json("samples.json").then((sampleData) => {
         
         console.log(panelData);
 
+        var data = [
+            {
+                domain: { x: [0, 1], y: [0, 1] },
+                value: sampleData.metadata[i].wfreq,
+                title: { text: "<b>Belly Button Washing Frequency</b><br>Scrubs per Week" },
+                type: "indicator",
+                mode: "gauge+number"
+            }
+        ];
+        
+        var layout = { width: 600, height: 500, margin: { t: 0, b: 0 } };
+        Plotly.newPlot('gauge', data, layout);
+
     };
 
     // Set up event listener
