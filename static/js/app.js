@@ -25,9 +25,9 @@ d3.json("samples.json").then((sampleData) => {
         var sortedPatientData = patientData.sort((a, b) => b.sample_values - a.sample_values);
 
         // Find first 10 values for first patient
-        var sampleValues = sortedData[i].sample_values.slice(0, 10).reverse();
-        var otuIds = sortedData[i].otu_ids.slice(0, 10);
-        var otuLabels = sortedData[i].otu_labels.slice(0, 10);
+        var sampleValues = sortedPatientData[i].sample_values.slice(0, 10).reverse();
+        var otuIds = sortedPatientData[i].otu_ids.slice(0, 10);
+        var otuLabels = sortedPatientData[i].otu_labels.slice(0, 10);
 
         // Create empty array for chart labels
         var chartLabels = [];
@@ -52,5 +52,26 @@ d3.json("samples.json").then((sampleData) => {
         // Using Plotly to visualise horizontal bar chart
         Plotly.newPlot("bar", data, layout, {displayModeBar: false});
     };
+
+    // Set up event listener
+    d3.selectAll("#selDataset").on("change", optionChanged);
+
+    // Update plot based on chosen dropdown value
+    function optionChanged() {
+
+        // Use d3 to select dropdown menu
+        var dropdownMenu = d3.select("selDataset");
+
+        // Store value into a variable
+        var dropdownValue = dropdownMenu.property("value");
+
+        console.log(names.findIndex(x => x === dropdownValue));
+
+        // Run init function using index of valye in dropdown menu
+        init(names.findIndex(x => x === dropdownValue));
+    };
+
+    // Call function to initialise page
+    init();
 
 });
