@@ -15,7 +15,7 @@ d3.json("samples.json").then((sampleData) => {
     // Define init function that loads visualisations when page is initialised
     function init(i) {
         
-        // Set index value to 0 for every page load
+        // Set initial page load's index value to 0
         i = i || 0;
 
         // Store data from each sample into an object
@@ -24,10 +24,10 @@ d3.json("samples.json").then((sampleData) => {
         // Sort new object by sample values
         var sortedPatientData = patientData.sort((a, b) => b.sample_values - a.sample_values);
 
-        // Find first 10 values for first patient
+        // Retieve first 10 OTUs and arrange them in reverse order
         var sampleValues = sortedPatientData[i].sample_values.slice(0, 10).reverse();
-        var otuIds = sortedPatientData[i].otu_ids.slice(0, 10);
-        var otuLabels = sortedPatientData[i].otu_labels.slice(0, 10);
+        var otuIds = sortedPatientData[i].otu_ids.slice(0, 10).reverse();
+        var otuLabels = sortedPatientData[i].otu_labels.slice(0, 10).reverse();
 
         // Create empty array for chart labels
         var chartLabels = [];
@@ -75,6 +75,31 @@ d3.json("samples.json").then((sampleData) => {
 
         // Using Plotly to visualise bubble chart
         Plotly.newPlot("bubble", data, layout);
+
+        // Retrieve demographic info metadata
+        var metadata = Object.entries(sampleData.metadata[i]);
+
+        // Using d3 to select html panel body element
+        var panelBody = d3.select(".panel-body");
+
+        // Create empty array to store panel data
+        var panelData = [];
+
+        // Append metadata into panel data array
+        metadata.forEach(x => panelData.push(`${x[0]}: ${x[1]}`));
+
+        // Clear existing data
+        d3.select(".panel-body").html("");
+
+        // Updata values in the panel
+        d3.select(".panel-body").selectAll("p")
+            .data(panelData)
+            .enter()
+            .append("p")
+            .html(d => d)
+        
+        console.log(panelData);
+
     };
 
     // Set up event listener
@@ -84,7 +109,7 @@ d3.json("samples.json").then((sampleData) => {
     function optionChanged() {
 
         // Use d3 to select dropdown menu
-        var dropdownMenu = d3.select("selDataset");
+        var dropdownMenu = d3.select("#selDataset");
 
         // Store value into a variable
         var dropdownValue = dropdownMenu.property("value");
