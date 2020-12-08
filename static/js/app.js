@@ -51,6 +51,30 @@ d3.json("samples.json").then((sampleData) => {
 
         // Using Plotly to visualise horizontal bar chart
         Plotly.newPlot("bar", data, layout, {displayModeBar: false});
+
+        // Store values for bubble chart into variables
+        var sampleValues = sampleData.samples[i].sample_values; // y values & marker size
+        var otuIds = sampleData.samples[i].otu_ids; // x values
+        var otuLables = sampleData.samples[i].otu_labels;
+
+        // Set data to plot
+        var data = [{
+            x: otuIds,
+            y: sampleValues,
+            mode: "markers",
+            marker: {
+                size: sampleValues.map(x => x / 1.25),
+                color: otuIds
+            }
+        }];
+
+        // Set plot title
+        var layout = {
+            title: "Bubble Chart"
+        }
+
+        // Using Plotly to visualise bubble chart
+        Plotly.newPlot("bubble", data, layout);
     };
 
     // Set up event listener
