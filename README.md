@@ -6,7 +6,7 @@ An interactive dashboard that explore belly button biodiversity and uses a datas
 
 ## Deployment
 
-The dashboard is deployed to Heroku at the following URL: <https://jeremychiaa.github.io/plotly-challenge/>.
+The dashboard is deployed to GitHub Pages at the following URL: <https://jeremychiaa.github.io/plotly-challenge/>.
 
 ## About the data
 
@@ -24,7 +24,7 @@ The dashboard is built using:
 * HTML
 * CSS
 
-## Visualizations
+## Visualisations
 
 The dashboard includes the following visualizations (which were built using Plotly):
 
